@@ -14,4 +14,4 @@ GREY = (128, 128, 128)
 
 # Load Image
 CROWN = pygame.transform.scale(
-    pygame.image.load('assets/crown.png'), (44, 25))
+    pygame.image.load('assets/crown.png'), (45, 25))
