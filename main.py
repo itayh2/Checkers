@@ -1,8 +1,9 @@
 import pygame
-from checkers.constants import WIDTH, HEIGHT, SQUARE_SIZE, RED, WHITE
+from checkers.constants import WIDTH, HEIGHT, SQUARE_SIZE, RED, WHITE, SCORE_FONT
 from checkers.board import Board
 from checkers.game import Game
 from minimax.algorithm import minimax
+
 
 FPS = 60
 
@@ -33,8 +34,13 @@ def main():
 
         # Checking if someone has won
         if game.winner() != None:
-            print(game.winner())
-            run = False
+            text = SCORE_FONT.render(game.winner(), 1, WHITE)
+            WIN.blit(text, (WIDTH//2 - text.get_width() //
+                            2, HEIGHT//2 - text.get_height()//2))
+            pygame.display.update()
+            pygame.time.delay(5000)
+            game.reset()
+            # run = False
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:

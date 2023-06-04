@@ -15,3 +15,7 @@ GREY = (128, 128, 128)
 # Load Image
 CROWN = pygame.transform.scale(
     pygame.image.load('assets/crown.png'), (45, 25))
+
+pygame.init()
+
+SCORE_FONT = pygame.font.SysFont("comicsans", 50)

@@ -82,10 +82,11 @@ class Board:
     # Winner Method
     def winner(self):
         if self.red_left <= 0:
-            return WHITE
+            # return WHITE
+            return "You Lose !"
         elif self.white_left <= 0:
-            return RED
-
+            # return RED
+            return "You Winner !"
         return None
 
     # Get Valid Moves Method which given a piece will tell us all of the valid moves that his piece could move to
