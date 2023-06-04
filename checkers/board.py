@@ -10,6 +10,7 @@ class Board:
         self.red_kings = self.white_kings = 0
         self.create_board()
 
+    # Draw Squares Method
     def draw_squares(self, win):
         win.fill(BLACK)
         for row in range(ROWS):
@@ -17,6 +18,18 @@ class Board:
                 pygame.draw.rect(win, RED, (row*SQUARE_SIZE,
                                  col * SQUARE_SIZE, SQUARE_SIZE, SQUARE_SIZE))
 
+    def evaluate(self):
+        return self.white_left - self.red_left + (self.white_kings * 0.5 - self.red_kings * 0.5)
+
+    def get_all_pieces(self, color):
+        pieces = []
+        for row in self.board:
+            for piece in row:
+                if piece != 0 and piece.color == color:
+                    pieces.append(piece)
+        return pieces
+
+    # Move method which will actually move a piece to a ceratin row and column
     def move(self, piece, row, col):
         self.board[piece.row][piece.col], self.board[row][col] = self.board[row][col], self.board[piece.row][piece.col]
         piece.move(row, col)
@@ -28,9 +41,11 @@ class Board:
             else:
                 self.red_kings += 1
 
+    # Get Piece which given a row and column will give us the piece that is that row and column
     def get_piece(self, row, col):
         return self.board[row][col]
 
+    # Create board obviously this is setting up the board
     def create_board(self):
         for row in range(ROWS):
             self.board.append([])
@@ -45,6 +60,7 @@ class Board:
                 else:
                     self.board[row].append(0)
 
+    # Draw Methid which is drawing everything
     def draw(self, win):
         self.draw_squares(win)
         for row in range(ROWS):
@@ -53,6 +69,7 @@ class Board:
                 if piece != 0:
                     piece.draw(win)
 
+    # Remove Method that remove a piece or pieces
     def remove(self, pieces):
         for piece in pieces:
             self.board[piece.row][piece.col] = 0
@@ -62,6 +79,7 @@ class Board:
                 else:
                     self.white_left -= 1
 
+    # Winner Method
     def winner(self):
         if self.red_left <= 0:
             return WHITE
@@ -70,6 +88,7 @@ class Board:
 
         return None
 
+    # Get Valid Moves Method which given a piece will tell us all of the valid moves that his piece could move to
     def get_valid_moves(self, piece):
         moves = {}
         left = piece.col - 1
@@ -89,6 +108,7 @@ class Board:
 
         return moves
 
+    # Traverse Left Method which is handling how we actually determine where we can move to
     def _traverse_left(self, start, stop, step, color, left, skipped=[]):
         moves = {}
         last = []
@@ -124,6 +144,7 @@ class Board:
 
         return moves
 
+    # Traverse Right Method which is handling how we actually determine where we can move to
     def _traverse_right(self, start, stop, step, color, right, skipped=[]):
         moves = {}
         last = []
