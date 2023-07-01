@@ -1,6 +1,10 @@
 from copy import deepcopy
 import pygame
 from checkers.constants import RED, WHITE
+import pygame.mixer
+# These functions provide the foundation for implementing an AI player in the checkers game using the minimax algorithm.
+
+# The minimax function is the main implementation of the minimax algorithm.
 
 
 def minimax(position, depth, max_player, game):
@@ -29,12 +33,16 @@ def minimax(position, depth, max_player, game):
 
         return minEval, best_move
 
+# The simulate_move function simulates a move on the game board.
+
 
 def simulate_move(piece, move, board, game, skip):
     board.move(piece, move[0], move[1])
     if skip:
         board.remove(skip)
     return board
+
+# The get_all_moves function generates all possible moves for a given color on the board state.
 
 
 def get_all_moves(board, color, game):
@@ -51,7 +59,7 @@ def get_all_moves(board, color, game):
 
     return moves
 
-# Method are draws what the ai thinking to do (the best move)
+# The draw_moves function are draws what the ai thinking to do (the best move)
 # def draw_moves(game, board, piece):
 #     valid_moves = board.get_valid_moves(piece)
 #     board.draw(game.win)

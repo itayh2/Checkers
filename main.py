@@ -3,10 +3,14 @@ from checkers.constants import WIDTH, HEIGHT, SQUARE_SIZE, RED, WHITE, SCORE_FON
 from checkers.board import Board
 from checkers.game import Game
 from minimax.algorithm import minimax
+import pygame.mixer
 
+
+pygame.mixer.init()
+lose_sound = pygame.mixer.Sound("assets/lose.wav")
+winner_sound = pygame.mixer.Sound("assets/winner.wav")
 
 FPS = 60
-
 WIN = pygame.display.set_mode((WIDTH, HEIGHT))
 
 pygame.display.set_caption('Checkers')
@@ -37,6 +41,10 @@ def main():
             text = SCORE_FONT.render(game.winner(), 1, WHITE)
             WIN.blit(text, (WIDTH//2 - text.get_width() //
                             2, HEIGHT//2 - text.get_height()//2))
+            if game.winner() == "You Lose !":
+                lose_sound.play()
+            else:
+                winner_sound.play()
             pygame.display.update()
             pygame.time.delay(5000)
             game.reset()
@@ -50,6 +58,10 @@ def main():
                 pos = pygame.mouse.get_pos()
                 row, col = get_row_col_from_mouse(pos)
                 game.select(row, col)
+
+            keys = pygame.key.get_pressed()
+            if keys[pygame.K_r]:
+                game.reset()
 
         game.update(WIN)
 

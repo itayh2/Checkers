@@ -4,13 +4,14 @@ from .constants import BLACK, ROWS, RED, SQUARE_SIZE, COLS, WHITE, GREY
 
 
 class Board:
+    # The __init__ method initializes the Board object
     def __init__(self):
         self.board = []
         self.red_left = self.white_left = 12
         self.red_kings = self.white_kings = 0
         self.create_board()
 
-    # Draw Squares Method
+    # The draw_squares method is responsible for drawing the checkerboard pattern on the game window
     def draw_squares(self, win):
         win.fill(BLACK)
         for row in range(ROWS):
@@ -18,9 +19,11 @@ class Board:
                 pygame.draw.rect(win, GREY, (row*SQUARE_SIZE,
                                  col * SQUARE_SIZE, SQUARE_SIZE, SQUARE_SIZE))
 
+    # The evaluate method calculates and returns the evaluation score of the current board state
     def evaluate(self):
         return self.white_left - self.red_left + (self.white_kings * 0.5 - self.red_kings * 0.5)
 
+    # The get_all_pieces method takes a color parameter and returns a list of all the pieces on the board that match the specified color.
     def get_all_pieces(self, color):
         pieces = []
         for row in self.board:
@@ -29,11 +32,10 @@ class Board:
                     pieces.append(piece)
         return pieces
 
-    # Move method which will actually move a piece to a ceratin row and column
+    # The move method moves a piece to a new position on the board, If the piece reaches the last row, it is promoted to a king
     def move(self, piece, row, col):
         self.board[piece.row][piece.col], self.board[row][col] = self.board[row][col], self.board[piece.row][piece.col]
         piece.move(row, col)
-
         if row == ROWS - 1 or row == 0:
             piece.make_king()
             if piece.color == WHITE:
@@ -41,11 +43,11 @@ class Board:
             else:
                 self.red_kings += 1
 
-    # Get Piece which given a row and column will give us the piece that is that row and column
+    # The get_piece method retrieves the piece object at a given row and column on the board.
     def get_piece(self, row, col):
         return self.board[row][col]
 
-    # Create board obviously this is setting up the board
+    # The create_board method populates the board list with Piece objects according to the initial configuration of the checkers game, Empty positions are represented as 0 in the board list.
     def create_board(self):
         for row in range(ROWS):
             self.board.append([])
@@ -60,7 +62,7 @@ class Board:
                 else:
                     self.board[row].append(0)
 
-    # Draw Methid which is drawing everything
+    # The draw method draws the entire game board, including the squares and the pieces. It calls the draw_squares method to draw the squares and iterates over each position on the board.
     def draw(self, win):
         self.draw_squares(win)
         for row in range(ROWS):
@@ -69,7 +71,7 @@ class Board:
                 if piece != 0:
                     piece.draw(win)
 
-    # Remove Method that remove a piece or pieces
+    # The remove method removes a list of pieces from the board.
     def remove(self, pieces):
         for piece in pieces:
             self.board[piece.row][piece.col] = 0
@@ -79,7 +81,7 @@ class Board:
                 else:
                     self.white_left -= 1
 
-    # Winner Method
+    # The winner method checks if there is a winner in the current game state.
     def winner(self):
         if self.red_left <= 0:
             # return WHITE
@@ -87,9 +89,10 @@ class Board:
         elif self.white_left <= 0:
             # return RED
             return "You Winner !"
+
         return None
 
-    # Get Valid Moves Method which given a piece will tell us all of the valid moves that his piece could move to
+    # The get_valid_moves method takes a piece object and returns a dictionary containing all the valid moves that the piece can make.
     def get_valid_moves(self, piece):
         moves = {}
         left = piece.col - 1
@@ -142,7 +145,6 @@ class Board:
                 last = [current]
 
             left -= 1
-
         return moves
 
     # Traverse Right Method which is handling how we actually determine where we can move to
@@ -178,5 +180,4 @@ class Board:
                 last = [current]
 
             right += 1
-
         return moves
