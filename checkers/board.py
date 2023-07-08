@@ -2,6 +2,8 @@ import pygame
 from checkers.piece import Piece
 from .constants import BLACK, ROWS, RED, SQUARE_SIZE, COLS, WHITE, GREY
 
+#  The Board class represents the game board, which is made up of 8 x 8 squares, and is responsible for all the movements of the pieces on the board
+
 
 class Board:
     # The __init__ method initializes the Board object

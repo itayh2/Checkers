@@ -5,10 +5,12 @@ from checkers.game import Game
 from minimax.algorithm import minimax
 import pygame.mixer
 
-
+# sounds for win and lose
 pygame.mixer.init()
 lose_sound = pygame.mixer.Sound("assets/lose.wav")
 winner_sound = pygame.mixer.Sound("assets/winner.wav")
+logo = pygame.image.load("assets/logo.png")
+pygame.display.set_icon(logo)
 
 FPS = 60
 WIN = pygame.display.set_mode((WIDTH, HEIGHT))
@@ -48,7 +50,6 @@ def main():
             pygame.display.update()
             pygame.time.delay(5000)
             game.reset()
-            # run = False
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -59,6 +60,7 @@ def main():
                 row, col = get_row_col_from_mouse(pos)
                 game.select(row, col)
 
+            # Press on 'r' key for reset the game
             keys = pygame.key.get_pressed()
             if keys[pygame.K_r]:
                 game.reset()

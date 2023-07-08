@@ -58,12 +58,3 @@ def get_all_moves(board, color, game):
             moves.append(new_board)
 
     return moves
-
-# The draw_moves function are draws what the ai thinking to do (the best move)
-# def draw_moves(game, board, piece):
-#     valid_moves = board.get_valid_moves(piece)
-#     board.draw(game.win)
-#     pygame.draw.circle(game.win, (0, 255, 0), (piece.x, piece.y), 50, 5)
-#     game.draw_valid_moves(valid_moves.keys())
-#     pygame.display.update()
-#     pygame.time.delay(100)
